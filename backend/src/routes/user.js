@@ -17,7 +17,7 @@ router.put("/user/:userId",
     // check("password", "password should be atleast 5 chars").isLength({ min : 5 })
 // ], isSignedIn, 
 
-isAuthenticated, updateUser);
+isSignedIn,isAuthenticated, updateUser);
 
 
 module.exports = router;

@@ -4,6 +4,7 @@ require('dotenv').config()
 
 const authRoutes = require("./src/routes/auth");
 const userRoutes = require("./src/routes/user");
+
 const cookieParser = require('cookie-parser');
 const cors = require('cors'); 
 
