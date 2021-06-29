@@ -1,12 +1,14 @@
-
+const client = require("../db/db_config");
 const { check, validationResult } = require('express-validator');
 
-exports.getUserById = (req, res, next, id) =>{
-    console.log("get user by id");
+exports.getUserById = async (req, res, next, id) =>{
+    const user = await client.query(`SELECT * FROM user.userinfo WHERE id="${id}"`);
+    req.user = user;
+    next();
 }
 
-exports.getUser = (req, res) =>{
-    console.log("get user");
+exports.getUser =  (req, res) =>{
+    res.json(req.user);
 } 
 
 exports.updateUser = (req,res) => {
