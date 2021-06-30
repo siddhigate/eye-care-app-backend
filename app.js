@@ -1,46 +1,27 @@
-/*===== MENU SHOW =====*/ 
-const showMenu = (toggleId, navId) =>{
-    const toggle = document.getElementById(toggleId),
-    nav = document.getElementById(navId)
+const express = require('express');
+const app = express();
+require('dotenv').config()
 
-    if(toggle && nav){
-        toggle.addEventListener('click', ()=>{
-            nav.classList.toggle('show')
-        })
-    }
-}
-showMenu('nav-toggle','nav-menu')
+const authRoutes = require("./src/routes/auth");
+const userRoutes = require("./src/routes/user");
 
-/*===== ACTIVE AND REMOVE MENU =====*/
-const navLink = document.querySelectorAll('.nav__link');   
+const cookieParser = require('cookie-parser');
+const cors = require('cors'); 
 
-function linkAction(){
-  /*Active link*/
-  navLink.forEach(n => n.classList.remove('active'));
-  this.classList.add('active');
-  
-  /*Remove menu mobile*/
-  const navMenu = document.getElementById('nav-menu')
-  navMenu.classList.remove('show')
-}
-navLink.forEach(n => n.addEventListener('click', linkAction));
 
-// const first = () => {
-//     modal_window.style.display = "none";
-// }
+// middlewares
+app.use(express.json());
+app.use(express.urlencoded({ extended: true}));
+app.use(cors());
 
-const signout_btn = document.querySelector(".signout");
-const signin_btn = document.querySelector(".signin");
-const isLoggedIn = false;
-const first = () => {
-    console.log("hello");
-    modal_window.style.display = "none";
-    if(isLoggedIn){
-        signout_btn.style.display = "initial";
-        signin_btn.style.display = "none";
-    }
-    else{
-        signout_btn.style.display = "none";
-        signin_btn.style.display = "inital";
-    }
-}
+// Routes
+app.use("/api", authRoutes);
+app.use("/api", userRoutes);
+
+// port
+const port = process.env.PORT || 8000;
+
+// starting server
+app.listen(port, ()=>{
+    console.log(`App is running at ${port}`);
+})
